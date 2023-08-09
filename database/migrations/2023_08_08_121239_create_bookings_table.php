@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->unSignedBigInteger('user_id');
-            $table->unSignedBigInteger('concert_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('concert_id');
             $table->enum('seat_position', ['vip_seat', 'premium_seat', 'regular_seat']);
-            $table->enum('no_of_tickets', [1,2,3,4,5,6,7,8,9,10]);
-            $table->integer('total_price');
+            $table->unsignedInteger('no_of_tickets');
+            $table->unsignedInteger('total_price');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('customers');
             $table->foreign('concert_id')->references('id')->on('concerts');
         });
     }
