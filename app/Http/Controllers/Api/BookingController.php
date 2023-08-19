@@ -15,9 +15,25 @@ class BookingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return BookingResource::collection(Booking::paginate());
+        $query = Booking::query();
+
+        if ($request->concertId) {
+            $query->where('concert_id', $request->concertId);
+        }
+
+        if ($request->customerId) {
+            $query->where('customer_id', $request->customerId);
+        }
+
+        if ($request->seatPosition) {
+            $query->where('seat_position', $request->seatPosition);
+        }
+
+        return BookingResource::collection($query->get());
+
+        // return BookingResource::collection(Booking::paginate());
     }
 
     /**

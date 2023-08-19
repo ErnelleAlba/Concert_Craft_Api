@@ -7,6 +7,7 @@ use App\Http\Requests\ConcertStoreRequest;
 use App\Http\Requests\ConcertUpdateRequest;
 use App\Http\Resources\ConcertResource;
 use App\Models\Concert;
+use Carbon\Carbon;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,24 @@ class ConcertController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ConcertResource::collection(Concert::all());
+        $query = Concert::query();
+
+        if ($request->month) {
+            $query->whereMonth('event_date', $request->month);
+        }
+
+        if ($request->title) {
+            $query->where('title', 'LIKE', '%' .  $request->title . '%');
+        }
+
+
+        return ConcertResource::collection($query->get());
+        
+
+        
+        // return ConcertResource::collection(Concert::all());
     }
 
     /**

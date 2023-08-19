@@ -15,9 +15,24 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return CustomerResource::collection(Customer::paginate());
+        $query = Customer::query();
+
+        if ($request->firstName) {
+            $query->where('first_name', $request->firstName);
+        }
+
+        if ($request->lastName) {
+            $query->where('last_name', $request->lastName);
+        }
+
+        if ($request->age) {
+            $query->where('age', $request->age);
+        }
+
+        return CustomerResource::collection($query->get());
+        // return CustomerResource::collection(Customer::paginate());
     }
 
     /**

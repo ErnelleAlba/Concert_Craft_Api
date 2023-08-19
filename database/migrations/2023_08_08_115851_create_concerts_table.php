@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('concerts', function (Blueprint $table) {
             $table->id();
             $table->text('title');
-            $table->text('poster_image_url');
+            $table->text('poster_image_url')->nullable();
             $table->text('description');
             $table->dateTime('event_date');
             $table->text('event_place');
