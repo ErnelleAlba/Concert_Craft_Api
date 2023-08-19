@@ -17,12 +17,13 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'first_name'=> fake()-> firstName(),
-            'last_name'=> fake() -> lastName(),
-            'email' => fake() -> unique() -> safeEmail(),
-            'password' => fake()-> text(10),
-            'phone' => fake() -> tollFreePhoneNumber(),
-            'address' => fake() -> text(15),
+            'first_name'=> fake()->firstName(),
+            'last_name'=> fake()->lastName(),
+            'age'=> fake()->numberBetween(18, 50),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => fake()->text(10),
+            'phone' => fake()->tollFreePhoneNumber(),
+            'address' => fake()->address(),
         ];
     }
 }

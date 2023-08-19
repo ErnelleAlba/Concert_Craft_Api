@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('poster_image_url');
             $table->text('description');
             $table->dateTime('event_date');
-            $table->text('place');
+            $table->text('event_place');
             $table->unsignedInteger('ticket_price');
             $table->timestamps();
         });

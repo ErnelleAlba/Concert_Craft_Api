@@ -21,9 +21,9 @@ class BookingFactory extends Factory
         return [
             'customer_id' => Customer::factory(),
             'concert_id' => Concert::factory(),
-            'seat_position' => fake() -> randomElement(['vip_seat', 'premium_seat', 'regular_seat']),
-            'no_of_tickets' => fake() -> numberBetween(1,9),
-            'total_price' => fake() -> numberBetween(2000,50000),
+            'seat_position' => fake()->randomElement(['vip_seat', 'premium_seat', 'regular_seat']),
+            'no_of_tickets' => fake()->numberBetween(1,9),
+            'total_price' => fake()->numberBetween(2000,50000),
         ];
     }
 }

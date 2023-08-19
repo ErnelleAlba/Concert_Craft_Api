@@ -17,12 +17,12 @@ class ConcertFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake() -> realText($maxNbChars = 50, $indexSize = 1),
-            'poster_image_url' => fake() -> imageUrl(480, 640, 'singer', true),
-            'description' => fake() -> realText($maxNbChars = 200, $indexSize = 1),
-            'event_date' => fake() -> dateTimeThisYear(),
-            'place'  => fake() -> city(),
-            'ticket_price' => fake() -> numberBetween(2000, 5000),
+            'title' =>fake()->realText($maxNbChars = 50, $indexSize = 1),
+            'poster_image_url' =>fake()->imageUrl(480, 640, 'people', true),
+            'description' => fake()->realText($maxNbChars = 200, $indexSize = 1),
+            'event_date' => fake()->dateTimeThisYear(),
+            'event_place'  => fake()->city(),
+            'ticket_price' => fake()->numberBetween(2000, 5000),
         ];
     }
 }
