@@ -31,18 +31,11 @@ class BookingController extends Controller
             $query->where('seat_position', $request->seatPosition);
         }
 
-        return BookingResource::collection($query->get());
+        return BookingResource::collection($query->with('concert')->get());
 
         // return BookingResource::collection(Booking::paginate());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -65,16 +58,9 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        return  BookingResource::make($booking);
+        return  BookingResource::make($booking->loadMissing('customer')->loadMissing('concert'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
