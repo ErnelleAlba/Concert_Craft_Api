@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Booking;
 use App\Models\Concert;
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,10 +23,24 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        User::factory()->create([
+            'first_name'=> 'admin',
+            'last_name'=> 'user',
+            'age'=> '20',
+            'username'=> 'admin-user',
+            'role'=> 'admin',
+            'email' => 'admin@example.com',
+            'password' => 'admin12345',
+            'phone' => '09123456789',
+            'address' => 'Somewhere',
+        ]); 
 
-        Concert::factory(5) 
+        Concert::factory(10) 
         -> hasBookings(5)
         -> create();
+
+        User::factory(10)->create();
+
 
 
 

@@ -19,7 +19,7 @@ class Customer extends Model
         'address',
     ];
 
-    public function bookings(){
-        return $this->hasMany(Booking::class);
-    }
+    // public function bookings(){
+    //     return $this->hasMany(Booking::class);
+    // }
 }

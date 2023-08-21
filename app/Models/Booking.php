@@ -10,15 +10,15 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable =[
-        'customer_id',
+        'user_id',
         'concert_id',
         'seat_position',
         'no_of_tickets',
         'total_price',
     ];
 
-    public function customer(){
-        return $this->belongsTo(Customer::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
     public function concert(){

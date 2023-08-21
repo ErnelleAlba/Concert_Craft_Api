@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ConcertUpdateRequest extends FormRequest
+class UserStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,15 @@ class ConcertUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'sometimes',
-            'posterImageUrl' => 'sometimes',
-            'description' => 'sometimes',
-            'eventDate' => 'sometimes',
-            'eventPlace' => 'sometimes',
-            'ticketPrice' => 'sometimes|numeric',
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'age' => 'required|numeric|between:18,100 ',
+            'username' => 'required|unique:users,username',
+            'role' => 'required',
+            'email' => 'required|unique:users|email:rfc',
+            'password' => 'required|min:8',
+            'phone' => 'required|numeric|digits:10',
+            'address' => 'required',
         ];
     }
 
@@ -39,7 +42,6 @@ class ConcertUpdateRequest extends FormRequest
             'success' => false,
             'message' => 'Validation errors',
             'data' => $validator->errors(),
-        ]));
-
+        ]));  
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Concert;
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class BookingFactory extends Factory
     public function definition(): array
     {
         return [
-            'customer_id' => Customer::factory(),
+            'user_id' => User::factory(),
             'concert_id' => Concert::factory(),
             'seat_position' => fake()->randomElement(['vip_seat', 'premium_seat', 'regular_seat']),
             'no_of_tickets' => fake()->numberBetween(1,9),

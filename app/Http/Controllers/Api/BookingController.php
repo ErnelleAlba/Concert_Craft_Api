@@ -23,8 +23,8 @@ class BookingController extends Controller
             $query->where('concert_id', $request->concertId);
         }
 
-        if ($request->customerId) {
-            $query->where('customer_id', $request->customerId);
+        if ($request->userId) {
+            $query->where('user_id', $request->userId);
         }
 
         if ($request->seatPosition) {

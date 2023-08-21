@@ -31,16 +31,8 @@ class CustomerController extends Controller
             $query->where('age', $request->age);
         }
 
-        return CustomerResource::collection($query->get());
+        return CustomerResource::collection($query->paginate());
         // return CustomerResource::collection(Customer::paginate());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -69,13 +61,6 @@ class CustomerController extends Controller
         return CustomerResource::make($customer);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
