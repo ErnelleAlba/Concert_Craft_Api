@@ -25,9 +25,9 @@ class ConcertStoreRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'posterImageUrl' => 'required|url',
+            'posterImageUrl' => 'required',
             'description' => 'required',
-            'eventDate' => 'required|date_format:Y-m-d H:i',
+            'eventDate' => 'required',
             'eventPlace' => 'required',
             'ticketPrice' => 'required|numeric',
         ];

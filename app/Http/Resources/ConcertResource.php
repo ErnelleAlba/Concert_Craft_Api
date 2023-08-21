@@ -20,7 +20,7 @@ class ConcertResource extends JsonResource
             "title" => $this->title,
             "posterImageUrl" => $this->poster_image_url,
             "description" => $this->description,
-            "eventDate" => Carbon::parse($this->event_date)->format('Y-m-d H:i'),
+            "eventDate" => Carbon::parse($this->event_date)->format('F d, Y-H:i A'),
             "eventPlace" => $this->event_place,
             "ticketPrice" => $this->ticket_price,
         ];

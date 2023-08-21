@@ -25,9 +25,9 @@ class ConcertUpdateRequest extends FormRequest
     {
         return [
             'title' => 'sometimes|required',
-            'posterImageUrl' => 'sometimes|required|url',
+            'posterImageUrl' => 'sometimes|required',
             'description' => 'sometimes|required',
-            'eventDate' => 'sometimes|required|date_format:Y-m-d H:i',
+            'eventDate' => 'sometimes|required',
             'eventPlace' => 'sometimes|required',
             'ticketPrice' => 'sometimes|required|numeric',
         ];

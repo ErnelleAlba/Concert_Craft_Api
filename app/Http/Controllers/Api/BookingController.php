@@ -31,7 +31,7 @@ class BookingController extends Controller
             $query->where('seat_position', $request->seatPosition);
         }
 
-        return BookingResource::collection($query->with('concert')->get());
+        return BookingResource::collection($query->get());
 
         // return BookingResource::collection(Booking::paginate());
     }
