@@ -28,11 +28,7 @@ class ConcertController extends Controller
             $query->where('title', 'LIKE', '%' .  $request->title . '%');
         }
 
-
-        return ConcertResource::collection($query->get());
-        
-
-        
+        return ConcertResource::collection($query->orderBy('event_date')->get());
         // return ConcertResource::collection(Concert::all());
     }
 
