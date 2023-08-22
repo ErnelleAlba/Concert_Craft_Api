@@ -25,6 +25,10 @@ class UserController extends Controller
             $query->where('role', $request->role );
         }
 
+        if ($request->username) {
+            $query->where('username', 'LIKE', '%' .  $request->username . '%');
+        }
+
         return UserResource::collection($query->get());
         // return UserResource::collection(User::all());
     }
@@ -104,9 +108,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::find($id);
         try {
-            Booking::where('user_id', $id)->delete();
-            $id->delete();
+            $user->delete();
 
             return response()->json([
                 'success' => true,
@@ -116,7 +120,7 @@ class UserController extends Controller
         } catch (Exception $err) {
             return response()->json([
                 'success' => false,
-                'message' => 'Cannot delete the user',
+                'message' => $err,
             ]);
         }
 

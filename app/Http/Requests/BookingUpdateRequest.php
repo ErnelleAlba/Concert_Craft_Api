@@ -24,7 +24,6 @@ class BookingUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId' => 'sometimes|required|exists:users,id',
             'concertId' => 'sometimes|required|exists:concerts,id',
             'seatPosition' => 'sometimes|required|in:regular_seat,premium_seat,vip_seat',
             'noOfTickets' => 'sometimes|required|numeric',

@@ -24,7 +24,6 @@ class BookingStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId' => 'required|exists:users,id',
             'concertId' => 'required|exists:concerts,id',
             'seatPosition' => 'required|in:regular_seat,premium_seat,vip_seat',
             'noOfTickets' => 'required|numeric',

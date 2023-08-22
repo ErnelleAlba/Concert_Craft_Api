@@ -7,8 +7,10 @@ use App\Http\Requests\BookingStoreRequest;
 use App\Http\Requests\BookingUpdateRequest;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
+use App\Models\Concert;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -23,15 +25,11 @@ class BookingController extends Controller
             $query->where('concert_id', $request->concertId);
         }
 
-        if ($request->userId) {
-            $query->where('user_id', $request->userId);
-        }
-
         if ($request->seatPosition) {
             $query->where('seat_position', $request->seatPosition);
         }
 
-        return BookingResource::collection($query->get());
+        return BookingResource::collection($query->with('user')->with('concert')->get());
 
         // return BookingResource::collection(Booking::paginate());
     }
@@ -42,9 +40,10 @@ class BookingController extends Controller
      */
     public function store(BookingStoreRequest $request)
     {
+        $user= Auth::user();
         return BookingResource::make(
             Booking::create([
-                'user_id' => $request->userId,
+                'user_id' => $user->id,
                 'concert_id' => $request->concertId,
                 'seat_position' => $request->seatPosition,
                 'no_of_tickets' => $request->noOfTickets,

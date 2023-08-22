@@ -9,7 +9,7 @@ class Concert extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
+    protected $fillable = [
         'title',
         'poster_image_url',
         'description',
