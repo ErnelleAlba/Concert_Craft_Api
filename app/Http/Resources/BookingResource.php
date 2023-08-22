@@ -19,7 +19,7 @@ class BookingResource extends JsonResource
             "userId" => $this->user_id,
             "userInfo"=> UserResource::make($this->whenLoaded('user')),
             "concertId" => $this->concert_id,
-            "concertInfo"=> ConcertResource::make($this-> whenLoaded('concert')),
+            "concertInfo"=> ConcertResource::make($this->whenLoaded('concert')),
             "seatPosition" => $this->seat_position,
             "noOfTickets" => $this->no_of_tickets,
             "totalPrice" => $this->total_price,

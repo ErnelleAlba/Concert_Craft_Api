@@ -44,7 +44,7 @@ class BookingController extends Controller
     {
         return BookingResource::make(
             Booking::create([
-                'customer_id' => $request->customerId,
+                'user_id' => $request->userId,
                 'concert_id' => $request->concertId,
                 'seat_position' => $request->seatPosition,
                 'no_of_tickets' => $request->noOfTickets,
@@ -56,19 +56,23 @@ class BookingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Booking $booking)
+    public function show($id)
     {
-        return  BookingResource::make($booking->loadMissing('customer')->loadMissing('concert'));
+        $booking = Booking::find($id);
+
+        return  BookingResource::make($booking->loadMissing('user')->loadMissing('concert'));
     }
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(BookingUpdateRequest $request, Booking $booking)
+    public function update(BookingUpdateRequest $request, $id)
     {
-        if(isset($request->customerId)) {
-            $booking->customer_id = $request->customerId;
+        $booking = Booking::find($id);
+
+        if(isset($request->userId)) {
+            $booking->user_id = $request->userId;
         }
 
         if(isset($request->concertId)) {
@@ -95,8 +99,10 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Booking $booking)
+    public function destroy($id)
     {
+        $booking = Booking::find($id);
+
         $booking->delete();
         throw new HttpResponseException(response()->json([
             'success' => true,

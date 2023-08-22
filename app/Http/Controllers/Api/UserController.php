@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Booking;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 
@@ -102,11 +104,21 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
-        throw new HttpResponseException(response()->json([
-            'success' => true,
-            'message' => 'This user has been deleted',
-        ]));
+        try {
+            Booking::where('user_id', $id)->delete();
+            $id->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'This user has been deleted',
+            ]);
+
+        } catch (Exception $err) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot delete the user',
+            ]);
+        }
+
     }
 }

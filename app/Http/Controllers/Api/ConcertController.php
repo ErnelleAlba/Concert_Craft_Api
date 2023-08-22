@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ConcertStoreRequest;
 use App\Http\Requests\ConcertUpdateRequest;
 use App\Http\Resources\ConcertResource;
+use App\Models\Booking;
 use App\Models\Concert;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 
@@ -37,31 +39,44 @@ class ConcertController extends Controller
      */
     public function store(ConcertStoreRequest $request)
     {
-        return ConcertResource::make(
-            Concert::create([
-                'title' => $request->title,
-                'poster_image_url' => $request->posterImageUrl,
-                'description' => $request->description,
-                'event_date' => $request->eventDate,
-                'event_place' => $request->eventPlace,
-                'ticket_price' => $request->ticketPrice,
-            ])
-        );
+        $recipe = Concert::create([
+            'title' => $request->title,
+            'poster_image_url' => $request->posterImageUrl,
+            'description' => $request->description,
+            'event_date' => $request->eventDate,
+            'event_place' => $request->eventPlace,
+            'ticket_price' => $request->ticketPrice,
+        ]);
+
+        if ($request->hasFile('posterImageUrl')) {
+            $file = $request->file('posterImageUrl');
+
+            $fileName = time() . '-' . $file->getClientOriginalName();
+            $file->storePubliclyAs('public/concerts', $fileName);
+
+            $recipe->poster_image_url = 'storage/concerts/' . $fileName;
+            $recipe->save();
+        }
+
+        return ConcertResource::make($recipe);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Concert $concert)
+    public function show($id)
     {
+        $concert = Concert::find($id);
         return ConcertResource::make($concert);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ConcertUpdateRequest $request, Concert $concert)
+    public function update(ConcertUpdateRequest $request, $id)
     {
+        $concert = Concert::find($id);
+
         if(isset($request->title)) {
             $concert->title = $request->title;
         }
@@ -94,12 +109,24 @@ class ConcertController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Concert $concert)
+    public function destroy($id)
     {
-        $concert->delete();
-        throw new HttpResponseException(response()->json([
-            'success' => true,
-            'message' => 'This concert has been deleted',
-        ]));
+        $concert = Concert::find($id);
+
+        try {
+            Booking::where('concert_id', $concert->id)->delete();
+            $concert->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'This concert has been deleted',
+            ]);
+
+        } catch (Exception $err) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot delete concert',
+            ]);
+        }
     }
 }
