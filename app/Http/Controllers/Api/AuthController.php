@@ -22,9 +22,28 @@ class AuthController extends Controller
             $token = null;
 
             if ($user->role === 'admin') {
-                $token = $user->createToken('admin-token', ['getUsers']);
+                $token = $user->createToken('admin-token', 
+                [
+                    'getUsers',
+                    'getUsersById', 
+                    'deleteUser', 
+                    'createConcert', 
+                    'editConcert', 
+                    'deleteConcert', 
+                    'getBooking' , 
+                    'getBookingById', 
+                    'editBooking', 
+                    'deleteBooking'
+                ]);
             } else {
-                $token = $user->createToken('regular-token', ['getConcerts']);
+                $token = $user->createToken('regular-token', 
+                [
+                    'getConcerts',
+                    'createBooking',
+                    'getBookingById',
+                    'getUsersById',
+                    'editUser',
+                ]);
             }
             
 

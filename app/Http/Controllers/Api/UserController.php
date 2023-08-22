@@ -50,8 +50,9 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
+        $user = User::find($id);
         return UserResource::make($user);
     }
 
@@ -59,8 +60,10 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(UserUpdateRequest $request, $id)
     {
+        $user = User::find($id);
+
         if (isset($request->firstName)){
             $user->first_name = $request->firstName;
         }
@@ -97,8 +100,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
+        $user = User::find($id);
         $user->delete();
         throw new HttpResponseException(response()->json([
             'success' => true,
